@@ -12,8 +12,6 @@ This repository contains the implementation for the paper Krause Synchronization
     </div>
   </div>
 </section>
-<strong>Krause Attention</strong>, grounded in bounded-confidence interactions, promotes localized multi-cluster synchronization (top). In contrast, standard self-attention tends to induce globally coupled dynamics that concentrate attention onto a dominant mode, often manifesting as attention sinks  (Xiao et al., 2024) (bottom).
-   
 
 <section class="hero is-small">
   <div class="hero-body" style="background: transparent;">
@@ -27,7 +25,6 @@ This repository contains the implementation for the paper Krause Synchronization
     </div>
   </div>
 </section>
-Visual Illustration of our <strong>Krause Attention</strong>.
 
 <section class="hero is-small">
   <div class="hero-body" style="background-color: #f5f5f5 !important; padding: 40px 0;">
@@ -42,7 +39,6 @@ Visual Illustration of our <strong>Krause Attention</strong>.
     </div>
   </div>
 </section>
-Layer dynamics of first-token attentions on <strong>Llama3-8B</strong>.
 
 <section class="hero is-small" style="background: transparent;">
   <div class="hero-body">
@@ -57,15 +53,12 @@ Layer dynamics of first-token attentions on <strong>Llama3-8B</strong>.
         </div>
         <strong>Krause Attention</strong> yields more diverse attention heads.
         </h2>
-        <hr style="background-color: #dbdbdb; height: 1px; margin: 3rem 0;">
         <div class="has-text-centered">
           <img src="images/attention_evolution_map.svg" 
                alt="Attention Evolution" 
                loading="lazy" 
                style="max-width: 100%; height: auto; display: block;"/>
         </div>
-        Evolution of attention scores across layers in KViTs/ViTs. <strong>Krause Attention</strong> (left) achieves stable multi-cluster formation, while standard attention (right) progressively converges to a single global consensus.
-        </h2>
       </div>
     </div>
   </div>
@@ -93,8 +86,6 @@ Layer dynamics of first-token attentions on <strong>Llama3-8B</strong>.
                    style="width: 100%; height: auto; display: block;"/>
             </div>
           </div>
-        </div>
-        Samples completed by Krause Autoregressive Models (KARMs) on <strong>MNIST</strong> (left) and <strong>CIFAR-10</strong> (right).
         </div>
       </div>
     </div>
