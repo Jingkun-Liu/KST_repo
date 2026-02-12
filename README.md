@@ -7,7 +7,7 @@ This repository contains the implementation for the paper Krause Synchronization
       <div class="has-text-centered">
         <img src="images/figure1.png" 
              alt="Description of the new attention mechanism" 
-             style="width: 80%; height: auto; display: inline-block;"> 
+             style="width: 100%; height: auto; display: inline-block;"> 
              </div>
     </div>
   </div>
