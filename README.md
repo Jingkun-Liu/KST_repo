@@ -7,12 +7,12 @@ This repository contains the implementation for the paper Krause Synchronization
       <img src="images/figure1.pdf" 
            alt="Description of the new attention mechanism" 
            style="width: 80%; height: auto; display: block; margin: 0 auto;">
-      <h2 class="subtitle has-text-centered" style="margin-top: 1.5rem;">
-        <strong>Krause Attention</strong>, grounded in bounded-confidence interactions, promotes localized multi-cluster synchronization (top). In contrast, standard self-attention tends to induce globally coupled dynamics that concentrate attention onto a dominant mode, often manifesting as attention sinks  (Xiao et al., 2024) (bottom).
-      </h2>
+         </h2>
     </div>
   </div>
 </section>
+<strong>Krause Attention</strong>, grounded in bounded-confidence interactions, promotes localized multi-cluster synchronization (top). In contrast, standard self-attention tends to induce globally coupled dynamics that concentrate attention onto a dominant mode, often manifesting as attention sinks  (Xiao et al., 2024) (bottom).
+   
 
 <section class="hero is-small">
   <div class="hero-body" style="background: transparent;">
