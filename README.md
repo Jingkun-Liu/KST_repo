@@ -106,7 +106,7 @@ pip install -r requirements.txt
 ```
 
 ## Project Structure
-
+```text
 Krause-Synchronization-Transformers/
 ├── autoregressive_transformers/
 │   ├── cifar10/ 
@@ -179,12 +179,13 @@ Krause-Synchronization-Transformers/
 │       │── evaluation.sh
 │       └── main.py             
 └── images/  # images/gifs used in readme and our website
+```
 
 ## Datasets
 * **Automatic Download**: The `CIFAR-10` and `MNIST` datasets will be automatically downloaded upon running the scripts.
 * **Manual Download Required**:
     * **ImageNet-1K**: Please download from [https://www.image-net.org/download.php].
-    * **LLM Datasets**: Relevant datasets can be found at [Link Address].
+    * **LLM Datasets**: Relevant datasets can be found at [https://huggingface.co/datasets/SirNeural/flan_v2/tree/main].
 ---
 > **Local Dataset Release**
 > We have also prepared a set of locally curated datasets optimized for this project, which will be released soon to ensure reproducibility.
