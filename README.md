@@ -302,7 +302,7 @@ echo "=========================================="
 ```
 
 ## Citation
-If you find our research useful, please consider citing our work!
+If you find this research useful, please consider citing our work!
 ```bash
 @article{liukrause2026,
   title={Krause Synchronization Transformers},
