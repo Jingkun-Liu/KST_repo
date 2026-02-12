@@ -51,7 +51,7 @@ This repository contains the implementation for the paper Krause Synchronization
       <div class="item" style="max-width: 850px; margin: 0 auto;">        
         <h2 class="title is-2.5 has-text-left">Attention Heatmaps in Vision Transformers</h2>        
         <div class="has-text-left">
-          <img src="images/imagenet_heatmap_main.pdf" 
+          <img src="images/imagenet_heatmap_main.svg" 
                alt="Attention Heatmaps" 
                loading="lazy" 
                style="max-width: 100%; height: auto; display: block;"/>
@@ -61,7 +61,7 @@ This repository contains the implementation for the paper Krause Synchronization
         </h2>
         <hr style="background-color: #dbdbdb; height: 1px; margin: 3rem 0;">
         <div class="has-text-left">
-          <img src="images/attention_evolution_map.pdf" 
+          <img src="images/attention_evolution_map.svg" 
                alt="Attention Evolution" 
                loading="lazy" 
                style="max-width: 100%; height: auto; display: block;"/>
@@ -83,7 +83,7 @@ This repository contains the implementation for the paper Krause Synchronization
         <div class="columns is-vcentered is-variable is-5">
           <div class="column">
             <div class="has-text-left">
-              <img src="images/completion_mnist.pdf" 
+              <img src="images/completion_mnist.svg" 
                    alt="Attention Heatmaps" 
                    loading="lazy" 
                    style="width: 100%; height: auto; display: block;"/>
@@ -91,7 +91,7 @@ This repository contains the implementation for the paper Krause Synchronization
           </div>
           <div class="column">
             <div class="has-text-left">
-              <img src="images/completion_cifar10.pdf" 
+              <img src="images/completion_cifar10.svg" 
                    alt="Attention Evolution Across Layers" 
                    loading="lazy" 
                    style="width: 100%; height: auto; display: block;"/>
