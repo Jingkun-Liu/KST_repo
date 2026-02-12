@@ -4,6 +4,7 @@ This repository contains the implementation for the paper Krause Synchronization
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
+      <div class="has-text-centered">
       <img src="images/figure1.svg" 
            alt="Description of the new attention mechanism" 
            style="width: 80%; height: auto; display: block; margin: 0 auto;">
@@ -19,56 +20,51 @@ This repository contains the implementation for the paper Krause Synchronization
     <div class="container">
       <div class="item" style="max-width: 850px; margin: 0 auto;">
         <h2 class="title is-2.5 has-text-left">Krause Attention</h2>
-        <div class="has-text-left">
+        <div class="has-text-centered">
           <img src="images/kst_gif.gif" alt="Teaser GIF" style="width: 100%; height: auto; display: block;">
-        <h2 class="subtitle has-text-centered mt-3">
-          Visual Illustration of our <strong>Krause Attention</strong>.
         </h2>
       </div>
     </div>
   </div>
 </section>
+Visual Illustration of our <strong>Krause Attention</strong>.
 
 <section class="hero is-small">
   <div class="hero-body" style="background-color: #f5f5f5 !important; padding: 40px 0;">
     <div class="container">
       <div class="item" style="max-width: 850px; margin: 0 auto;">
         <h2 class="title is-2.5 has-text-left">Alleviating Attention Sinks in Krause-LLMs</h2>
-        <div class="has-text-left">
+        <div class="has-text-centered">
           <img src="images/attention_sink_llama3.svg" alt="Second research result visualization" loading="lazy" style="max-width: 100%; height: auto; display: block;"/>
         </div>
-        <h2 class="subtitle has-text-centered mt-3">
-          Layer dynamics of first-token attentions on <strong>Llama3-8B</strong>.
         </h2>
       </div>
     </div>
   </div>
 </section>
+Layer dynamics of first-token attentions on <strong>Llama3-8B</strong>.
 
 <section class="hero is-small" style="background: transparent;">
   <div class="hero-body">
     <div class="container">
       <div class="item" style="max-width: 850px; margin: 0 auto;">        
         <h2 class="title is-2.5 has-text-left">Attention Heatmaps in Vision Transformers</h2>        
-        <div class="has-text-left">
+        <div class="has-text-centered">
           <img src="images/imagenet_heatmap_main.svg" 
                alt="Attention Heatmaps" 
                loading="lazy" 
                style="max-width: 100%; height: auto; display: block;"/>
         </div>
-        <h2 class="subtitle has-text-centered mt-3 mb-6">
-          <strong>Krause Attention</strong> yields more diverse attention heads.
+        <strong>Krause Attention</strong> yields more diverse attention heads.
         </h2>
         <hr style="background-color: #dbdbdb; height: 1px; margin: 3rem 0;">
-        <div class="has-text-left">
+        <div class="has-text-centered">
           <img src="images/attention_evolution_map.svg" 
                alt="Attention Evolution" 
                loading="lazy" 
                style="max-width: 100%; height: auto; display: block;"/>
         </div>
-        <h2 class="subtitle has-text-centered mt-3">
-          Evolution of attention scores across layers in KViTs/ViTs. <strong>Krause Attention</strong> (left) achieves stable multi-cluster formation, while
-          standard attention (right) progressively converges to a single global consensus.
+        Evolution of attention scores across layers in KViTs/ViTs. <strong>Krause Attention</strong> (left) achieves stable multi-cluster formation, while standard attention (right) progressively converges to a single global consensus.
         </h2>
       </div>
     </div>
@@ -82,7 +78,7 @@ This repository contains the implementation for the paper Krause Synchronization
         <h2 class="title is-2.5 has-text-centered">Krause Autoregressive Transformers for Image Generation</h2>        
         <div class="columns is-vcentered is-variable is-5">
           <div class="column">
-            <div class="has-text-left">
+            <div class="has-text-centered">
               <img src="images/completion_mnist.svg" 
                    alt="Attention Heatmaps" 
                    loading="lazy" 
@@ -90,7 +86,7 @@ This repository contains the implementation for the paper Krause Synchronization
             </div>
           </div>
           <div class="column">
-            <div class="has-text-left">
+            <div class="has-text-centered">
               <img src="images/completion_cifar10.svg" 
                    alt="Attention Evolution Across Layers" 
                    loading="lazy" 
@@ -98,10 +94,7 @@ This repository contains the implementation for the paper Krause Synchronization
             </div>
           </div>
         </div>
-        <h2 class="subtitle has-text-centered mt-3">
-          <p>
-            Samples completed by Krause Autoregressive Models (KARMs) on <strong>MNIST</strong> (left) and <strong>CIFAR-10</strong> (right).
-          </p>
+        Samples completed by Krause Autoregressive Models (KARMs) on <strong>MNIST</strong> (left) and <strong>CIFAR-10</strong> (right).
         </div>
       </div>
     </div>
