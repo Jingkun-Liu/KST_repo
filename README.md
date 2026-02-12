@@ -97,6 +97,3 @@ Clone the repository:
 ```bash
 git clone [https://github.com/Jingkun-Liu/Krause-Synchronization-Transformers.git](https://github.com/Jingkun-Liu/Krause-Synchronization-Transformers.git)
 cd Krause-Synchronization-Transformers
-
-
-
