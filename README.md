@@ -163,6 +163,6 @@ If you find this research useful, please consider citing our work!
   author={Jingkun Liu and Yisong Yue and Max Welling and Yue Song},
   journal={ArXiv},
   year={2026},
-  url={https://your-domain.com/your-project-page}
+  url={https://arxiv.org/abs/2602.11534}
 }
 ```
