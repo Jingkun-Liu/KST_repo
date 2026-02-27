@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SIGMAS="8.0"
+SIGMAS="9.0"
 DROPOUTS="0.0"
 
 EPOCHS=300
