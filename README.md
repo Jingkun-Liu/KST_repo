@@ -68,7 +68,7 @@ Krause-Synchronization-Transformers/
 │   │   │── run_kswin.sh
 │   │   │── run_kvit.sh
 │   │   │── run_swin.sh
-│   │   │── run_vit.sh
+│   │   └── run_vit.sh
 │   ├── imagenet1k/ 
 │   │   │── KViT-S-16/
 │   │   │   │── data.py
@@ -87,7 +87,7 @@ Krause-Synchronization-Transformers/
 │   │   │   │── module.py
 │   │   │   └── vit_b_16_main.py
 │   │   │── run_kvit.sh
-│   │   │── run_vit.sh
+│   │   └── run_vit.sh
 ├── lora_llms/
 │   ├── llama/ 
 │   │   │── module.py
@@ -103,7 +103,13 @@ Krause-Synchronization-Transformers/
 │       │── benchmark.py
 │       │── util.py
 │       │── evaluation.sh
-│       └── main.py             
+│       └── main.py
+├── language_models_100m/
+│       │── build_fwe10bt.py
+│       │── module.py
+│       │── run_train_100m.sh
+│       │── train_100m.py
+│       └── training_utils.py
 └── images/  # images/gifs used in readme and our website
 ```
 
