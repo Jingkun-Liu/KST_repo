@@ -1,13 +1,10 @@
 import math
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 def build_causal_mask(seq_len: int, device: torch.device) -> torch.Tensor:
     return torch.triu(torch.ones(seq_len, seq_len, device=device, dtype=torch.bool), diagonal=1)
-
 
 class KrauseStandardMixAttention(nn.Module):
     def __init__(
@@ -41,15 +38,14 @@ class KrauseStandardMixAttention(nn.Module):
         self.o_proj_krause = nn.Linear(hidden_size, hidden_size)
         self.log_sigma = nn.Parameter(torch.full((num_heads, 1, 1), math.log(init_sigma)))
 
-        # Token-level gate following the reference implementation idea.
         self.gate_proj_krause = nn.Linear(hidden_size * 2, 2, bias=True)
         with torch.no_grad():
             nn.init.normal_(self.gate_proj_krause.weight, mean=0.0, std=0.01)
             if self.gate_proj_krause.bias is not None:
                 init_standard_weight = min(max(init_standard_weight, 1e-4), 1 - 1e-4)
                 init_logit_diff = math.log(init_standard_weight / (1.0 - init_standard_weight))
-                self.gate_proj_krause.bias.data[0] = init_logit_diff  # standard
-                self.gate_proj_krause.bias.data[1] = 0.0  # krause
+                self.gate_proj_krause.bias.data[0] = init_logit_diff
+                self.gate_proj_krause.bias.data[1] = 0.0
 
         self.attn_dropout = nn.Dropout(attn_dropout)
 
