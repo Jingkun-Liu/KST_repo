@@ -118,6 +118,7 @@ Krause-Synchronization-Transformers/
 * **Manual Download Required**:
     * **ImageNet-1K**: Please download from [https://www.image-net.org/download.php].
     * **LLM Datasets**: Relevant datasets can be found at [https://huggingface.co/datasets/SirNeural/flan_v2/tree/main].
+    * **Language Model Training Datasets**: Subsets of FineWeb-Edu are available at [https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu].
     * **LLMs**: Llama3-8B can be found at [https://huggingface.co/meta-llama/Meta-Llama-3-8B]. Qwen1.5-7B can be found at [https://huggingface.co/Qwen/Qwen1.5-7B].
 ---
 > **Local Dataset Release**:
