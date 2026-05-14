@@ -8,7 +8,6 @@ from dataclasses import asdict, dataclass
 from functools import partial
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-
 import torch
 import torch.nn as nn
 import torch.distributed as dist
@@ -38,11 +37,8 @@ from torch.utils.checkpoint import checkpoint
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
-
 DEFAULT_DATA_DIR = "./datasets/fwe10bt"
-
 
 class TransformerBlock(nn.Module):
     def __init__(self, cfg: "ModelConfig"):
@@ -71,11 +67,9 @@ class TransformerBlock(nn.Module):
         x = x + self.ffn(self.ln2(x))
         return x
 
-
 @dataclass
 class ModelConfig:
     vocab_size: int
-    # Default configuration for the ~100M parameter scale.
     hidden_size: int = 768
     num_layers: int = 8
     num_heads: int = 12
@@ -143,7 +137,6 @@ def build_fsdp_plugin_for_revision() -> FullyShardedDataParallelPlugin:
         use_orig_params=True,
     )
 
-
 def save_revision_rotating_checkpoint(
     accelerator: Accelerator,
     model: nn.Module,
@@ -189,7 +182,6 @@ def _load_legacy_revision_checkpoint(
     unwrapped.load_state_dict(torch.load(ckpt_path / "pytorch_model.bin", map_location=map_loc))
     optimizer.load_state_dict(torch.load(ckpt_path / "optimizer.pt", map_location=map_loc))
     scheduler.load_state_dict(torch.load(ckpt_path / "scheduler.pt", map_location=map_loc))
-
 
 def train_one_model(
     args,
@@ -521,17 +513,15 @@ def train_one_model(
 def main():
     if "TORCH_DISTRIBUTED_TIMEOUT" not in os.environ:
         os.environ["TORCH_DISTRIBUTED_TIMEOUT"] = "7200"
-
     parser = argparse.ArgumentParser(
-        description="Train from scratch ~100M Krause attention language model on ./datasets/fwe10bt (FineWeb-style parquet)."
+        description="Train from scratch ~100M Krause attention language model on ./datasets/fwe10bt."
     )
     parser.add_argument(
         "--data_dir",
         type=str,
         default=DEFAULT_DATA_DIR,
-        help="Root directory of the training data.",
     )
-    parser.add_argument("--train_path", type=str, default=None, help="Explicit train file/directory path (overrides glob).")
+    parser.add_argument("--train_path", type=str, default=None)
     parser.add_argument("--val_path", type=str, default=None)
     parser.add_argument("--test_path", type=str, default=None)
     parser.add_argument("--train_glob", type=str, default="train.parquet")
@@ -542,30 +532,25 @@ def main():
         "--packed_cache_dir",
         type=str,
         default=None,
-        help="Root directory for fixed-length packed cache; defaults to <data_dir>/packed_tokenized.",
     )
     parser.add_argument(
         "--force_repack",
         action="store_true",
-        help="Ignore existing packed cache and rebuild by map+save.",
     )
     parser.add_argument(
         "--tokenizer_path",
         type=str,
         default="./llm/gpt2",
-        help="HuggingFace tokenizer",
     )
     parser.add_argument(
         "--output_root",
         type=str,
-        default="./revision_models_100m",
-        help="Output root directory.",
+        default="./models_100m",
     )
     parser.add_argument("--device", type=str, default="cuda", choices=["cuda", "cpu"])
     parser.add_argument(
         "--no_gradient_checkpointing",
         action="store_true",
-        help="Disable model-level activation checkpointing on CPU only; CUDA uses FSDP plugin checkpointing (see build_fsdp_plugin_for_revision).",
     )
 
     parser.add_argument("--hidden_size", type=int, default=768)
@@ -584,41 +569,35 @@ def main():
         "--top_k",
         type=int,
         default=16,
-        help="Krause branch sparsity; number of keys kept per query.",
     )
     parser.add_argument("--init_sigma", type=float, default=2.5)
     parser.add_argument(
         "--init_standard_weight",
         type=float,
         default=0.8,
-        help="Initial standard-branch mixture weight in the Krause+Standard gate (learnable).",
     )
 
     parser.add_argument(
         "--total_train_tokens",
         type=int,
         default=int(10e9),
-        help="Global token budget across all ranks; max_steps = total_train_tokens / tokens_per_optimizer_step.",
     )
     parser.add_argument(
         "--tokens_per_batch",
         type=int,
         default=250_000,
-        help="Target global token count per optimizer step (aligned with the FSDP training script).",
     )
     parser.add_argument("--peak_lr", type=float, default=6e-4)
     parser.add_argument(
         "--min_lr_ratio",
         type=float,
         default=0.1,
-        help="Final cosine LR ratio: final_lr / peak_lr (aligned with the FSDP training script).",
     )
     parser.add_argument("--weight_decay", type=float, default=0.1)
     parser.add_argument(
         "--warmup_ratio",
         type=float,
         default=0.05,
-        help="LR warmup ratio over total training steps; warmup_steps = int(max_steps * warmup_ratio) (aligned with the FSDP training script).",
     )
     parser.add_argument("--max_train_steps", type=int, default=-1, help="When >0, override max_steps computed from total_train_tokens.")
     parser.add_argument("--max_eval_steps", type=int, default=-1)
@@ -626,23 +605,19 @@ def main():
         "--num_workers",
         type=int,
         default=8,
-        help="Number of DataLoader workers (shared by train/val/test); 0 means main-process loading.",
     )
     parser.add_argument(
         "--prefetch_factor",
         type=int,
         default=4,
-        help="Prefetch batches per worker when num_workers>0 (effective only if num_workers>0).",
     )
     parser.add_argument(
         "--no_tf32",
         action="store_true",
-        help="Disable TF32 on Ampere+ GPUs (matmul/cudnn allow_tf32 is enabled by default).",
     )
     parser.add_argument(
         "--no_fused_adamw",
         action="store_true",
-        help="Disable fused AdamW kernel (CUDA tries fused=True by default).",
     )
     parser.add_argument("--num_proc", type=int, default=4)
     parser.add_argument("--log_every_steps", type=int, default=10)
@@ -656,12 +631,10 @@ def main():
         "--save_total_limit",
         type=int,
         default=3,
-        help="Maximum number of step checkpoints to keep (<=0 means unlimited).",
     )
     parser.add_argument(
         "--compile",
         action="store_true",
-        help="Wrap model with torch.compile (must run before Accelerate/FSDP prepare; requires PyTorch 2.0+, aligned with the FSDP training script).",
     )
     args = parser.parse_args()
 
@@ -676,7 +649,6 @@ def main():
     if is_main:
         print(
             f"Distributed init (barrier/data sync): use_ddp={use_ddp}, rank/world_size={rank}/{world_size}. "
-            f"Training loop uses Accelerate+FSDP (aligned with train_llama100m_fwe10bt_fsdp.py)."
         )
         print(
             f"Training schedule: total_train_tokens={args.total_train_tokens}, "
