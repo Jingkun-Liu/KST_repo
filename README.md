@@ -169,7 +169,7 @@ If you find this research useful, please consider citing our work!
 @article{liukrause2026,
   title={Krause Synchronization Transformers},
   author={Jingkun Liu and Yisong Yue and Max Welling and Yue Song},
-  journal={ArXiv},
+  journal={ICML},
   year={2026},
   url={https://arxiv.org/abs/2602.11534}
 }
