@@ -116,7 +116,7 @@ Krause-Synchronization-Transformers/
 > We have also prepared a set of locally curated datasets optimized for this project, which will be released soon to ensure reproducibility.
 
 ## Model Checkpoints
-ckpts will be released soon
+Checkpoints are available at https://drive.google.com/drive/folders/1wZ4MvuzXHPQO4IPaT2tANtnqlaNSCiZa?usp=sharing.
 
 ## Usage
 We provide run scripts that can be submitted simply using sbatch for every task. For example, to run the ImageNet-1K classification task for KViT-S-16, use the following command:
