@@ -4,7 +4,6 @@ import shutil
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-
 import numpy as np
 import torch
 import torch.distributed as dist
@@ -16,7 +15,6 @@ from torch.utils.data import DataLoader
 from transformers import PreTrainedTokenizer
 
 logger = logging.getLogger(__name__)
-
 
 def count_parameters(model: nn.Module) -> int:
     return sum(p.numel() for p in model.parameters())
@@ -31,7 +29,6 @@ def init_distributed() -> Tuple[bool, int, int]:
             dist.init_process_group(backend=backend)
         return True, rank, world_size
     return False, 0, 1
-
 
 def load_text_splits(
     data_dir: Path,
@@ -183,9 +180,7 @@ def load_or_tokenize_packed(
                     local_rank,
                     n * 2,
                 )
-
     return load_from_disk(str(out_dir))
-
 
 class RevisionLMDataCollator:
     def __call__(self, features: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
@@ -193,7 +188,6 @@ class RevisionLMDataCollator:
         attention_mask = torch.ones_like(input_ids)
         labels = input_ids.clone()
         return {"input_ids": input_ids, "attention_mask": attention_mask, "labels": labels}
-
 
 def compute_revision_lm_loss(model: nn.Module, batch: Dict[str, torch.Tensor]) -> torch.Tensor:
     input_ids = batch["input_ids"]
