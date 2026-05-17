@@ -18,7 +18,6 @@ for SIGMA in "${SIGMAS[@]}"; do
   echo "========== init_sigma=${SIGMA} WARMUP_RATIO=${WARMUP_RATIO} $(date -Is) =========="
   env CUDA_VISIBLE_DEVICES=0,1,2,3 \
     torchrun --nproc_per_node=4 --master_port 33243 train_100m.py \
-      --model_types krause \
       --data_dir ./datasets/fwe10bt \
       --tokenizer_path ./llm/gpt2 \
       --output_root ./models_100m \
