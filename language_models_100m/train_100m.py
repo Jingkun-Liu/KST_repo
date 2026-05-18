@@ -266,7 +266,6 @@ def train_one_model(
             accelerator.num_processes,
             grad_accum,
             actual_tokens,
-            tokens_per_step_target,
         )
         logger.info("max_steps=%s total_train_tokens=%s", max_steps, args.total_train_tokens)
         print(f"\n===== Training [{model_tag}] =====")
