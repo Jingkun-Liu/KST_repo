@@ -260,7 +260,7 @@ def train_one_model(
             cfg.gradient_checkpointing,
         )
         logger.info(
-            "Batch config: per_device=%s seq=%s world=%s grad_accum=%s -> tokens/optimizer_step=%s (target=%s)",
+            "Batch config: per_device=%s seq=%s world=%s grad_accum=%s -> tokens/optimizer_step=%s ",
             per_device,
             seq,
             accelerator.num_processes,
