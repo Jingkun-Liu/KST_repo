@@ -183,6 +183,36 @@ def _load_legacy_revision_checkpoint(
     optimizer.load_state_dict(torch.load(ckpt_path / "optimizer.pt", map_location=map_loc))
     scheduler.load_state_dict(torch.load(ckpt_path / "scheduler.pt", map_location=map_loc))
 
+def choose_batch_shape(
+    tokens_per_step_target: int,
+    seq_len: int,
+    world_size: int,
+    max_grad_accum: int = 64,
+    prefer_not_exceed: bool = True,
+) -> Tuple[int, int, int]:
+
+    base_tokens = max(1, seq_len * world_size)
+    target = max(1, int(tokens_per_step_target))
+    max_ga = max(1, int(max_grad_accum))
+    best: Optional[Tuple[int, int, int, int, int]] = None
+
+    for grad_accum in range(1, max_ga + 1):
+        denom = base_tokens * grad_accum
+        ideal_pd = target / denom
+        pd_floor = max(1, int(math.floor(ideal_pd)))
+        pd_ceil = max(1, int(math.ceil(ideal_pd)))
+        for per_device in {pd_floor, pd_ceil}:
+            actual = per_device * denom
+            over_penalty = 1 if (prefer_not_exceed and actual > target) else 0
+            cand = (over_penalty, abs(actual - target), grad_accum, per_device, actual)
+            if best is None or cand < best:
+                best = cand
+
+    assert best is not None
+    _, _, grad_accum, per_device, actual_tokens = best
+    return per_device, grad_accum, actual_tokens
+
+
 def train_one_model(
     args,
     train_ds: Dataset,
@@ -229,10 +259,13 @@ def train_one_model(
     seq = args.block_size
     world_size = int(os.environ.get("WORLD_SIZE", "1"))
     tokens_per_step_target = args.tokens_per_batch
-    per_device = max(1, tokens_per_step_target // (seq * world_size))
-    actual_tokens = per_device * seq * world_size
-    grad_accum = max(1, math.ceil(tokens_per_step_target / actual_tokens))
-    actual_tokens = per_device * seq * world_size * grad_accum
+    per_device, grad_accum, actual_tokens = choose_batch_shape(
+        tokens_per_step_target=tokens_per_step_target,
+        seq_len=seq,
+        world_size=world_size,
+        max_grad_accum=64,
+        prefer_not_exceed=True,
+    )
 
     max_steps = max(1, int(args.total_train_tokens // actual_tokens))
     if args.max_train_steps > 0:
@@ -260,12 +293,14 @@ def train_one_model(
             cfg.gradient_checkpointing,
         )
         logger.info(
-            "Batch config: per_device=%s seq=%s world=%s grad_accum=%s -> tokens/optimizer_step=%s ",
+            "Batch config: per_device=%s seq=%s world=%s grad_accum=%s -> tokens/optimizer_step=%s (target=%s, delta=%s)",
             per_device,
             seq,
             accelerator.num_processes,
             grad_accum,
             actual_tokens,
+            tokens_per_step_target,
+            actual_tokens - tokens_per_step_target,
         )
         logger.info("max_steps=%s total_train_tokens=%s", max_steps, args.total_train_tokens)
         print(f"\n===== Training [{model_tag}] =====")
@@ -553,7 +588,7 @@ def main():
     )
 
     parser.add_argument("--hidden_size", type=int, default=768)
-    parser.add_argument("--num_layers", type=int, default=12)
+    parser.add_argument("--num_layers", type=int, default=8)
     parser.add_argument("--num_heads", type=int, default=12)
     parser.add_argument("--ffn_hidden_size", type=int, default=2048)
 
@@ -584,7 +619,7 @@ def main():
     parser.add_argument(
         "--tokens_per_batch",
         type=int,
-        default=500_000,
+        default=1_000_000,
     )
     parser.add_argument("--peak_lr", type=float, default=6e-4)
     parser.add_argument(
